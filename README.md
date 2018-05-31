@@ -1,2 +1,2 @@
-# ng-core
-angular 5+ core utils
+# ngx-tinymce-editor
+angular 5+ tinymce editor

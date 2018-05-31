@@ -1,0 +1,3 @@
+<ngx-tinymce-editor [elementId]="'my-editor'" [height]="'300px'" [(content)]="content"
+                    [upload]="{url:'',fileKey:'file'}" (onEditorChange)="log(e)"></ngx-tinymce-editor>
+<span>{{content}}</span>

@@ -1,12 +1,12 @@
 {
   "name": "ngx-tinymce-editor",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "angular5+ tinymce editor",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve -p 4201 --open",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",

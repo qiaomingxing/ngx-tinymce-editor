@@ -1,18 +1,12 @@
 /**
  * Author: qiaomingxing
  * Time: 2018/5/31
- * Demo:  <ngx-tinymce-editor [elementId]="'my-editor'" [height]="'300px'" [(content)]="value" [upload]="{url:'',fileKey:'file'}"></ngx-tinymce-editor>
+ * Demo: <ngx-tinymce-editor [(content)]="value" [height]="'300px'" [upload]="{url:'',fileKey:'file'}"></ngx-tinymce-editor>
  * TODO tinymce editor 富文本编辑器
  */
 import {
-  Component,
-  OnDestroy,
-  AfterViewInit,
-  EventEmitter,
-  Input,
-  Output,
-  OnChanges,
-  AfterViewChecked
+  Component, OnDestroy, AfterViewInit,
+  EventEmitter, Input, Output, AfterViewChecked
 } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {UploadConfig} from './interface';
@@ -24,17 +18,16 @@ declare const tinymce: any;
   template: `<textarea id="{{elementId}}" [style.height]="height"></textarea>`
 })
 
-export class NgxTinymceComponent implements AfterViewInit, OnDestroy, AfterViewChecked, OnChanges {
-  @Input() elementId: string;
+export class NgxTinymceComponent implements AfterViewInit, OnDestroy, AfterViewChecked {
+  @Input() elementId = `ngx_tinymce_${Math.random().toString(36).substring(2)}`;
   @Input() content = '';
-  @Input() readonly = 0;
-  @Input() height = '500px';
-  @Output() onEditorKeyup = new EventEmitter<any>();
-  @Output() onEditorChange = new EventEmitter<any>();
   @Output() contentChange = new EventEmitter<any>();
+  @Input() height = '500px';
   uploadConfig: UploadConfig;
+  readonlyValue = 0;
   editor;
   firstLoad = true;
+  toolbar_image = '';
 
   constructor(private http: HttpClient) {
   }
@@ -42,6 +35,12 @@ export class NgxTinymceComponent implements AfterViewInit, OnDestroy, AfterViewC
   @Input()
   set upload(value: UploadConfig) {
     this.uploadConfig = value;
+    this.toolbar_image = ' image';
+  }
+
+  @Input()
+  set readonly(value) {
+    this.readonlyValue = 1;
   }
 
   ngAfterViewInit() {
@@ -49,7 +48,6 @@ export class NgxTinymceComponent implements AfterViewInit, OnDestroy, AfterViewC
     tinymce.init({
       selector: '#' + this.elementId,
       language: 'zh_CN',
-      // plugins: ['link', 'paste', 'table', 'image'],
       plugins: [
         'advlist autolink lists link image charmap print preview hr anchor pagebreak',
         'searchreplace wordcount visualblocks visualchars code fullscreen',
@@ -57,18 +55,16 @@ export class NgxTinymceComponent implements AfterViewInit, OnDestroy, AfterViewC
         'template paste textcolor colorpicker textpattern imagetools codesample'
       ],
       skin_url: 'assets/tinymce/skins/lightgray',
-      toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+      toolbar1: `insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link ${this.toolbar_image}`,
       toolbar2: 'print preview media | forecolor backcolor | codesample | fontselect fontsizeselect',
       fontsize_formats: '8px 10px 12px 14px 18px 24px 36px',
       image_advtab: true,
-      codesample_content_css: '/assets/tinymce/prism.css',
-      readonly: this.readonly,
+      // codesample_content_css: '/assets/tinymce/prism.css',
+      readonly: this.readonlyValue,
       setup: editor => {
         this.editor = editor;
         editor.on('keyup', () => {
-          const content = editor.getContent();
-          this.content = editor.getContent();
-          this.onEditorKeyup.emit(content);
+          setTimeout(() => this.contentChange.emit(editor.getContent()));
         });
       },
       images_upload_handler: function (blobInfo, success, failure) {
@@ -89,20 +85,15 @@ export class NgxTinymceComponent implements AfterViewInit, OnDestroy, AfterViewC
   }
 
   ngAfterViewChecked() {
-    if (this.editor && this.content) {
-      if (this.firstLoad) {
+    if (this.editor) {
+      if (this.firstLoad && this.content) {
         this.editor.setContent(this.content);
         this.firstLoad = false;
       }
-      const content = this.editor.getContent();
-      if (this.content !== content) {
-        this.content = this.editor.getContent();
-        this.onEditorChange.emit(content);
+      if (this.content !== this.editor.getContent()) {
+        setTimeout(() => this.contentChange.emit(this.editor.getContent()));
       }
     }
-  }
-
-  ngOnChanges(changes) {
   }
 
   ngOnDestroy() {

@@ -9,10 +9,6 @@ export class AppComponent {
   content = 'app';
 
   constructor() {
-
   }
 
-  log(e) {
-    console.log(e)
-  }
 }

@@ -12,7 +12,7 @@ npm install tinymce --save
 npm install ngx-tinymce-editor --save
 ```
 
-**Recommend:**
+### Recommend
 
 1. Import the `ngx-tinymce-editor` in to your root `AppModule`.
 2. Copy the `node_modules/tinymce/skins` in to your directory `assets/tinymce/skins`.
@@ -42,20 +42,20 @@ export class AppComponent  {
 }
 ```
 
-### How to use it with:
+### How to use it
 
 + `angular-cli` please refer to **Installation instructions**.
 
-## API
+### API
 
 | Name    | Type           | Default  | Description         |
 | ------- | -------------  | -----    | --------            |
 | content | `string`       | ""       | editor content      |
-| height  | `string`       | "500px"  | editor content      |
+| height  | `string`       | "500px"  | editor height       |
 | upload  | `object`       | null     | upload image config |
 | readonly| `any`          | false    | editor read only    |
 
-## Troubleshooting
+### Troubleshooting
 
 Please follow this guidelines when reporting bugs and feature requests:
 

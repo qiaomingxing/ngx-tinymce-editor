@@ -2,11 +2,10 @@
 
 [Tinymce](https://www.tinymce.com/) Components build with [Angular](https://angular.io/).
 
-
 ## Installation instructions
 
-Install `tinymce` from `npm`
-Install `ngx-tinymce-editor` from `npm`
+1. Install `tinymce` from `npm`
+2. Install `ngx-tinymce-editor` from `npm`
 
 ```bash
 npm install tinymce --save
@@ -15,8 +14,8 @@ npm install ngx-tinymce-editor --save
 
 **Recommend:**
 
-Import the `ngx-tinymce-editor` in to your root `AppModule`.
-Copy the `node_modules/tinymce/skins` in to your directory `assets/tinymce/skins`.
+1. Import the `ngx-tinymce-editor` in to your root `AppModule`.
+2. Copy the `node_modules/tinymce/skins` in to your directory `assets/tinymce/skins`.
 
 ```typescript
 import { NgxTinymceModule } from 'ngx-tinymce-editor';
@@ -51,10 +50,10 @@ export class AppComponent  {
 
 | Name    | Type           | Default  | Description         |
 | ------- | -------------  | -----    | --------            |
-| content | `string` |     | ''       | editor content      |
-| height  | `string` |     | '500px'  | editor content      |
-| upload  | `object` | -   | null     | upload image config |
-| readonly| `any`    | -   | false    | editor is readonly? |
+| content | `string`       | ""       | editor content      |
+| height  | `string`       | "500px"  | editor content      |
+| upload  | `object`       | null     | upload image config |
+| readonly| `any`          | false    | editor read only    |
 
 ## Troubleshooting
 

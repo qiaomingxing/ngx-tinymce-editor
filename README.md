@@ -18,11 +18,11 @@ npm install ngx-tinymce-editor --save
 2. Copy the `node_modules/tinymce/skins` in to your directory `assets/tinymce/skins`.
 
 ```typescript
-import { NgxTinymceModule } from 'ngx-tinymce-editor';
+import { NgxTinymceEditorModule } from 'ngx-tinymce-editor';
 
 @NgModule({
     imports: [
-        NgxTinymceModule.forRoot()
+        NgxTinymceEditorModule.forRoot()
     ]
 })
 export class AppModule { }
